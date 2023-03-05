@@ -126,7 +126,7 @@ router.post('/sharelist', (request, resposne) => {
 
 // 查询图书
 router.get('/getbooks', (request, resposne) => {
-    let sql = 'select * from book'
+    let sql = 'select book.id,book.bookphoto,book.bookname,book.bookthink,book.bookrate,book.booktype,book.booktime,book.createtime,users.nickname from book, users where book.username=users.username'
     mysql.query(sql, (err, results) => {
         if (err) return console.log(err.message)
         if (results && results.length >= 1) {
@@ -147,7 +147,7 @@ router.get('/getbooks', (request, resposne) => {
 
 // 查询书单
 router.get('/getlist', (request, resposne) => {
-    let sql = 'select * from list'
+    let sql = 'select users.nickname,list.title,list.id,list.booklist,list.createtime from list,users where list.username=users.username'
     mysql.query(sql, (err, results) => {
         if (err) return console.log(err.message)
         if (results && results.length >= 1) {
