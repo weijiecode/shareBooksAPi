@@ -213,4 +213,97 @@ router.post('/getlistdetail', (request, resposne) => {
     })
 
 })
+
+// 添加图书评论
+router.post('/commentbook', (request, resposne) => {
+    let sql = 'insert into commentbook(`username`,`bookid`,`content`,`createtime`)values(?,?,?,?)'
+    let params = [
+        request.body.username,
+        request.body.bookid,
+        request.body.content,
+        moment().format('YYYY-MM-DD HH:mm:ss')
+    ]
+    mysql.query(sql, params, (err, results) => {
+        if (err) return console.log(err.message)
+        if (results && results.affectedRows >= 1) {
+            resposne.json({
+                code: 200,
+                msg: '添加成功',
+            })
+        } else {
+            resposne.json({
+                code: 201,
+                msg: '添加失败'
+            })
+        }
+    })
+})
+
+// 添加书单评论
+router.post('/commentlist', (request, resposne) => {
+    let sql = 'insert into commentlist(`username`,`listid`,`content`,`createtime`)values(?,?,?,?)'
+    let params = [
+        request.body.username,
+        request.body.listid,
+        request.body.content,
+        moment().format('YYYY-MM-DD HH:mm:ss')
+    ]
+    mysql.query(sql, params, (err, results) => {
+        if (err) return console.log(err.message)
+        if (results && results.affectedRows >= 1) {
+            resposne.json({
+                code: 200,
+                msg: '添加成功',
+            })
+        } else {
+            resposne.json({
+                code: 201,
+                msg: '添加失败'
+            })
+        }
+    })
+})
+
+// 删除图书评论
+router.post('/delcommentbook', (request, resposne) => {
+    let sql = 'delete from commentbook where id=?'
+    let params = [
+        request.body.id
+    ]
+    mysql.query(sql, params, (err, results) => {
+        if (err) return console.log(err.message)
+        if (results && results.affectedRows >= 1) {
+            resposne.json({
+                code: 200,
+                msg: '删除成功',
+            })
+        } else {
+            resposne.json({
+                code: 201,
+                msg: '删除失败'
+            })
+        }
+    })
+})
+// 删除书单评论
+router.post('/delcommentlist', (request, resposne) => {
+    let sql = 'delete from commentlist where id=?'
+    let params = [
+        request.body.id
+    ]
+    mysql.query(sql, params, (err, results) => {
+        if (err) return console.log(err.message)
+        if (results && results.affectedRows >= 1) {
+            resposne.json({
+                code: 200,
+                msg: '删除成功',
+            })
+        } else {
+            resposne.json({
+                code: 201,
+                msg: '删除失败'
+            })
+        }
+    })
+})
 module.exports = router
